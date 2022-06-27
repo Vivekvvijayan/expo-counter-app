@@ -6,21 +6,23 @@ import { store } from './store'
 class App extends Component {
 
   render() {
+    const {count,increment,decrement} = this.props;
     return (
       <Provider store={store}>
 
-<View style={styles.container}>
+    <View style={styles.container}>
 
-<Button
-  title="Increment"
+        <Button
+        title="Increment"
+      onClick={() => increment(count)}
+        />
+          <Text style={{ fontSize: 25 }}>Count :-- </Text>
+    <Button
+    title="Decrement"
+    onClick={() => decrement(count)}
+    />
 
-/>
-<Text style={{ fontSize: 25 }}>Count :-- </Text>
-<Button
-  title="Decrement"
-/>
-
-</View>
+      </View>
 
       </Provider>
 
@@ -43,7 +45,22 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increment: () => {
+      dispatch({
+        type: 'INCREMENT'
+      })
+    },
+    decrement: () => {
+      dispatch({
+        type: 'DECREMENT'
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 
 
